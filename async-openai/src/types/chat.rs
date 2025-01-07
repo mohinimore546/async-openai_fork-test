@@ -782,13 +782,8 @@ where
         "content_filter" => Ok(Some(FinishReason::ContentFilter)),
         "function_call" => Ok(Some(FinishReason::FunctionCall)),
 
-        // whitelist known incompatible values
-        "" => Ok(None),
-
-        _ => Err(serde::de::Error::custom(format!(
-            "unknown finish reason: {}, expected one of: stop, length, tool_calls, content_filter, function_call",
-            s
-        ))),
+        // treat any other value as None
+        _ => Ok(None),
     }
 }
 
